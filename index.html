@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Macro Calculator | Digital Heroes</title>
+  <meta name="description" content="Calculate your daily caloric needs and perfect macro split — protein, carbs, and fats — tailored to your body and lifestyle. Download your personalised Meal Prep Sheet." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Animated background orbs (hidden on print via CSS) -->
+  <div class="bg-orb orb-1" aria-hidden="true"></div>
+  <div class="bg-orb orb-2" aria-hidden="true"></div>
+  <div class="bg-orb orb-3" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       VIEW 1 — CALCULATOR
+       Shown by default. Hidden when results are calculated.
+       No <form> tags — a plain <div> with type="button" controls.
+       ═══════════════════════════════════════════════════════ -->
+  <div id="view-calculator">
+
+    <div class="page-wrapper">
+
+      <!-- Header -->
+      <header class="site-header" id="calc-header">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="28" height="28" rx="8" fill="url(#logo-grad-a)"/>
+            <path d="M7 14C7 10.134 10.134 7 14 7V21C10.134 21 7 17.866 7 14Z" fill="white" fill-opacity="0.9"/>
+            <path d="M21 14C21 17.866 17.866 21 14 21V7C17.866 7 21 10.134 21 14Z" fill="white" fill-opacity="0.5"/>
+            <defs>
+              <linearGradient id="logo-grad-a" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6C63FF"/><stop offset="1" stop-color="#A855F7"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="logo-text">Digital <strong>Heroes</strong></span>
+        <a id="dh-cta-btn" href="https://digitalheroesco.com" target="_blank" rel="noopener noreferrer"
+           class="btn-dh-cta" aria-label="Visit Digital Heroes website">
+          <span class="btn-dh-icon" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </span>
+          Built for Digital Heroes
+        </a>
+      </header>
+
+      <!-- Hero -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-badge">
+          <span class="badge-dot" aria-hidden="true"></span>
+          Nutrition Science
+        </div>
+        <h1 id="hero-title" class="hero-title">
+          Your Perfect <span class="gradient-text">Macro Split</span>
+        </h1>
+        <p class="hero-subtitle">
+          Enter your stats below and get a personalised breakdown of daily calories,
+          protein, carbs &amp; fats — calculated using the Mifflin–St Jeor equation.
+        </p>
+      </section>
+
+      <!-- Calculator Card — plain <div>, NO <form> -->
+      <section class="card calculator-card" aria-label="Macro Calculator">
+        <div id="calculator-wrapper">
+
+          <!-- Row 1: Age & Gender -->
+          <div class="form-row two-col">
+            <div class="field-group">
+              <label class="field-label" for="age">Age</label>
+              <div class="input-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                </span>
+                <input type="number" id="age" class="field-input" placeholder="25"
+                       min="10" max="100" aria-describedby="age-hint" />
+                <span class="input-unit" aria-hidden="true">yrs</span>
+              </div>
+              <span id="age-hint" class="field-hint">Between 10 – 100</span>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="gender">Biological Sex</label>
+              <div class="input-wrap select-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </span>
+                <select id="gender" class="field-input field-select">
+                  <option value="" disabled selected>Select…</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+                <span class="select-chevron" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                       stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 2: Weight & Height -->
+          <div class="form-row two-col">
+            <div class="field-group">
+              <label class="field-label" for="weight">Weight</label>
+              <div class="input-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                  </svg>
+                </span>
+                <input type="number" id="weight" class="field-input" placeholder="70"
+                       min="20" max="300" step="0.1" />
+                <span class="input-unit" aria-hidden="true">kg</span>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="height">Height</label>
+              <div class="input-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 2l20 20M7 2v5M12 2v3M17 2v5M2 7h5M2 12h3M2 17h5"/>
+                  </svg>
+                </span>
+                <input type="number" id="height" class="field-input" placeholder="175"
+                       min="100" max="250" />
+                <span class="input-unit" aria-hidden="true">cm</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 3: Activity Level -->
+          <div class="form-row">
+            <div class="field-group">
+              <span class="field-label">Activity Level</span>
+              <div class="activity-grid" role="group" aria-label="Select activity level">
+                <label class="activity-card">
+                  <input type="radio" name="activity" value="1.2" />
+                  <span class="activity-icon" aria-hidden="true">🪑</span>
+                  <span class="activity-name">Sedentary</span>
+                  <span class="activity-desc">Little to no exercise</span>
+                </label>
+                <label class="activity-card">
+                  <input type="radio" name="activity" value="1.375" />
+                  <span class="activity-icon" aria-hidden="true">🚶</span>
+                  <span class="activity-name">Light</span>
+                  <span class="activity-desc">1–3 days / week</span>
+                </label>
+                <label class="activity-card">
+                  <input type="radio" name="activity" value="1.55" />
+                  <span class="activity-icon" aria-hidden="true">🏃</span>
+                  <span class="activity-name">Moderate</span>
+                  <span class="activity-desc">3–5 days / week</span>
+                </label>
+                <label class="activity-card">
+                  <input type="radio" name="activity" value="1.725" />
+                  <span class="activity-icon" aria-hidden="true">💪</span>
+                  <span class="activity-name">Active</span>
+                  <span class="activity-desc">6–7 days / week</span>
+                </label>
+                <label class="activity-card">
+                  <input type="radio" name="activity" value="1.9" />
+                  <span class="activity-icon" aria-hidden="true">🔥</span>
+                  <span class="activity-name">Very Active</span>
+                  <span class="activity-desc">Hard training daily</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 4: Dietary Preferences -->
+          <div class="form-row">
+            <p class="field-label" id="diet-legend">Dietary Preferences</p>
+            <div class="checkbox-group" role="group" aria-labelledby="diet-legend">
+              <label class="checkbox-card" for="vegetarian">
+                <input type="checkbox" id="vegetarian" />
+                <span class="checkbox-visual" aria-hidden="true">
+                  <svg class="check-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"
+                       stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="2 6 5 9 10 3"/>
+                  </svg>
+                </span>
+                <span class="checkbox-emoji" aria-hidden="true">🌿</span>
+                <span class="checkbox-content">
+                  <span class="checkbox-title">Vegetarian</span>
+                  <span class="checkbox-sub">Plant-based protein sources</span>
+                </span>
+              </label>
+              <label class="checkbox-card" for="lactose">
+                <input type="checkbox" id="lactose" />
+                <span class="checkbox-visual" aria-hidden="true">
+                  <svg class="check-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"
+                       stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="2 6 5 9 10 3"/>
+                  </svg>
+                </span>
+                <span class="checkbox-emoji" aria-hidden="true">🥛</span>
+                <span class="checkbox-content">
+                  <span class="checkbox-title">Lactose Intolerant</span>
+                  <span class="checkbox-sub">Avoid dairy-based sources</span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Calculate — type="button" is MANDATORY, no <form> means no submission risk -->
+          <div class="form-row submit-row">
+            <button type="button" id="calculate-btn" class="btn-primary">
+              <span class="btn-text">Calculate My Macros</span>
+              <span class="btn-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+              </span>
+            </button>
+          </div>
+
+          <!-- Validation error -->
+          <p id="form-error" class="form-error" role="alert" aria-live="assertive" hidden></p>
+
+        </div><!-- /#calculator-wrapper -->
+      </section>
+
+      <!-- Footer (calculator view) -->
+      <footer class="site-footer" id="calc-footer">
+        <p class="footer-disclaimer">
+          Results are estimates based on the <strong>Mifflin–St Jeor equation</strong>.
+          Consult a registered dietitian for personalised advice.
+        </p>
+        <div class="footer-divider" aria-hidden="true"></div>
+        <div class="footer-credit">
+          <span class="footer-name">SHYAM KUMAR G</span>
+          <span class="footer-sep" aria-hidden="true">|</span>
+          <a href="mailto:gshyamkumar001@gmail.com" class="footer-email">gshyamkumar001@gmail.com</a>
+        </div>
+      </footer>
+
+    </div><!-- /.page-wrapper -->
+  </div><!-- /#view-calculator -->
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       VIEW 2 — MEAL PREP SHEET
+       Hidden by default. Shown after calculation.
+       This is what window.print() will render as a PDF.
+       ═══════════════════════════════════════════════════════ -->
+  <div id="view-sheet" style="display:none;">
+
+    <!-- Sheet page wrapper -->
+    <div class="sheet-wrapper">
+
+      <!-- Sheet header — hidden on print -->
+      <div class="sheet-topbar no-print">
+        <div class="sheet-brand">
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="28" height="28" rx="8" fill="url(#logo-grad-b)"/>
+            <path d="M7 14C7 10.134 10.134 7 14 7V21C10.134 21 7 17.866 7 14Z" fill="white" fill-opacity="0.9"/>
+            <path d="M21 14C21 17.866 17.866 21 14 21V7C17.866 7 21 10.134 21 14Z" fill="white" fill-opacity="0.5"/>
+            <defs>
+              <linearGradient id="logo-grad-b" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6C63FF"/><stop offset="1" stop-color="#A855F7"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <span>Digital <strong>Heroes</strong></span>
+        </div>
+        <div class="sheet-actions">
+          <a href="https://digitalheroesco.com" target="_blank" rel="noopener noreferrer"
+             class="btn-dh-cta" id="sheet-dh-cta" aria-label="Visit Digital Heroes website">
+            <span class="btn-dh-icon" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </span>
+            Built for Digital Heroes
+          </a>
+          <button type="button" id="go-back-btn" class="btn-secondary">
+            ← Go Back
+          </button>
+          <button type="button" id="print-btn" class="btn-print">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 6 2 18 2 18 9"/>
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+              <rect x="6" y="14" width="12" height="8"/>
+            </svg>
+            Save as PDF
+          </button>
+        </div>
+      </div>
+
+      <!-- ── Printable Meal Prep Sheet ── -->
+      <div class="sheet-doc" id="sheet-doc">
+
+        <!-- Sheet header row (always visible, even on print) -->
+        <div class="sheet-header">
+          <div class="sheet-header-left">
+            <div class="sheet-logo-row">
+              <div class="sheet-logo-icon"></div>
+              <span class="sheet-brand-name">Digital Heroes</span>
+            </div>
+            <h1 class="sheet-title">Meal Prep Sheet</h1>
+            <p class="sheet-subtitle" id="sheet-subtitle">–</p>
+          </div>
+          <div class="sheet-header-right">
+            <span class="sheet-gen-label">Generated</span>
+            <span class="sheet-gen-date" id="sheet-date">–</span>
+          </div>
+        </div>
+
+        <!-- Calorie banner -->
+        <div class="sheet-calorie-banner">
+          <div class="sheet-calorie-label">Total Daily Calories</div>
+          <div class="sheet-calorie-value" id="sheet-calories">–</div>
+          <div class="sheet-calorie-sub">kcal &nbsp;|&nbsp; Mifflin–St Jeor Equation</div>
+        </div>
+
+        <!-- Macro rows -->
+        <div class="sheet-macros">
+
+          <div class="sheet-macro-block sheet-protein">
+            <div class="sheet-macro-top">
+              <div class="sheet-macro-label">
+                <span class="sheet-macro-emoji">🥩</span>
+                <span>Protein</span>
+              </div>
+              <div class="sheet-macro-amount">
+                <span class="sheet-macro-value" id="sheet-protein">–</span>
+                <span class="sheet-macro-unit">g</span>
+                <span class="sheet-macro-pct" id="sheet-pct-protein">–</span>
+              </div>
+            </div>
+            <p class="sheet-section-label">Recommended Foods</p>
+            <ul class="sheet-food-list" id="sheet-foods-protein"></ul>
+          </div>
+
+          <div class="sheet-macro-block sheet-carbs">
+            <div class="sheet-macro-top">
+              <div class="sheet-macro-label">
+                <span class="sheet-macro-emoji">🌾</span>
+                <span>Carbohydrates</span>
+              </div>
+              <div class="sheet-macro-amount">
+                <span class="sheet-macro-value" id="sheet-carbs">–</span>
+                <span class="sheet-macro-unit">g</span>
+                <span class="sheet-macro-pct" id="sheet-pct-carbs">–</span>
+              </div>
+            </div>
+            <p class="sheet-section-label">Recommended Foods</p>
+            <ul class="sheet-food-list" id="sheet-foods-carbs"></ul>
+          </div>
+
+          <div class="sheet-macro-block sheet-fats">
+            <div class="sheet-macro-top">
+              <div class="sheet-macro-label">
+                <span class="sheet-macro-emoji">🥑</span>
+                <span>Fats</span>
+              </div>
+              <div class="sheet-macro-amount">
+                <span class="sheet-macro-value" id="sheet-fats">–</span>
+                <span class="sheet-macro-unit">g</span>
+                <span class="sheet-macro-pct" id="sheet-pct-fats">–</span>
+              </div>
+            </div>
+            <p class="sheet-section-label">Recommended Foods</p>
+            <ul class="sheet-food-list" id="sheet-foods-fats"></ul>
+          </div>
+
+        </div><!-- /.sheet-macros -->
+
+        <!-- Diet tip banner (conditionally shown) -->
+        <div id="sheet-diet-note" class="sheet-diet-note" hidden></div>
+
+        <!-- Sheet footer (always printed) -->
+        <div class="sheet-footer">
+          <p>Results are estimates based on the Mifflin–St Jeor equation. Consult a registered dietitian for personalised nutritional guidance.</p>
+          <p class="sheet-footer-credit">SHYAM KUMAR G &nbsp;|&nbsp; gshyamkumar001@gmail.com</p>
+        </div>
+
+      </div><!-- /.sheet-doc -->
+
+    </div><!-- /.sheet-wrapper -->
+  </div><!-- /#view-sheet -->
+
+  <script src="script.js"></script>
+</body>
+</html>
