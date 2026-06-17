@@ -5,7 +5,7 @@
 A lightning-fast, 100% client-side web application designed to calculate personalized daily macros and instantly generate a clean, printable meal prep cheat-sheet. 
 
 ### 🚀 Live Demo
-[Insert Your Vercel Link Here]
+https://digital-heroes-macro-tool.vercel.app/
 
 ### 💡 The Problem it Solves
 Fitness apps are often overly complex, requiring sign-ups, subscriptions, and daily logging. I built this tool because users often just want a simple, one-time calculation that produces a static, printable guide to stick on their fridge for weekly meal prep.
